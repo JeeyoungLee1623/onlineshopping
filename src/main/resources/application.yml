@@ -1,0 +1,28 @@
+#server:
+#  port: 8081
+
+spring:
+  #  session ????? redis ? ???? ?? ??
+  session:
+    storage-type: redis
+  redis:
+    host: localhost
+    port: 6379
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/onlineshopping
+    username: root
+    password: 1234
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show_sql: true
+
+logging:
+  level:
+    #    log.error ?? ??? ??: trace < debug < info < error
+    #    ????? ????? info ? ??, info ? ?? ????? default ? info ?.
+    root: info
