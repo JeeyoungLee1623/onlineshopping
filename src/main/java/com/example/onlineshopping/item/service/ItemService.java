@@ -34,17 +34,28 @@ public class ItemService {
 
     public void update(ItemForm itemForm) throws Exception {
         Item item1 = itemRepository.findById(Long.parseLong(itemForm.getId())).orElseThrow(Exception::new);
-        if (item1 == null) {
-            throw new Exception();
-        } else {
-            item1.setName(itemForm.getName());
-            item1.setPrice(itemForm.getPrice());
-            item1.setStockQuantity(itemForm.getStockQuantity());
+        item1.updateItem(itemForm.getName(), itemForm.getPrice(),itemForm.getStockQuantity());
+//        if (item1 == null) {
+//            throw new Exception();
+//        } else {
+//            item1.setName(itemForm.getName());
+//            item1.setPrice(itemForm.getPrice());
+//            item1.setStockQuantity(itemForm.getStockQuantity());
             itemRepository.save(item1);
         }
 
 
+
+    public void delete (Long id) {
+        itemRepository.delete(this.findById(id));
     }
+
+
+    public Item findByName(String name) {
+        return itemRepository.findByName(name);
+    }
+
+
 
 
 

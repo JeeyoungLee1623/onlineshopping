@@ -1,6 +1,7 @@
 package com.example.onlineshopping.member.service;
 
 
+import com.example.onlineshopping.item.domain.Item;
 import com.example.onlineshopping.member.domain.Member;
 import com.example.onlineshopping.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class MemberService {
         return members;
     }
 
+
+    public Member findByEmail (String email) {
+        return memberRepository.findByEmail(email);
+    }
 
 
 

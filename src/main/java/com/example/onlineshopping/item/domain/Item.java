@@ -18,13 +18,11 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
+
     @Column(unique = true)
     private String name;
-    @Setter
     @Column(length = 255)
     private int price;
-    @Setter
     @Column(length = 255)
     private int stockQuantity;
     @Column
@@ -37,5 +35,13 @@ public class Item {
         this.stockQuantity = stockQuantity;
         this.createDate = LocalDateTime.now();
     }
+
+
+    public void updateItem(String name, int price, int stockQuantity){
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+    }
+
 
 }

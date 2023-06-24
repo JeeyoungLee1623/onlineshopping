@@ -55,13 +55,18 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
+
     @PostMapping("/items/{id}/edit")
     public String itemUpdate(ItemForm itemForm) throws Exception {
         itemService.update(itemForm);
         return "redirect:/items";
     }
 
-
+    @GetMapping("/items/{id}/delete")
+    public String deleteItem(@PathVariable(value = "id")String id){
+        itemService.delete(Long.parseLong(id));
+        return "redirect:/items";
+    }
 
 
 

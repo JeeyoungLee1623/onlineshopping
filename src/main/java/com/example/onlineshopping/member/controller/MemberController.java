@@ -50,7 +50,7 @@ public class MemberController {
         memberService.create(member1);
         return "redirect:/members";
     }
-    
+
 //    회원 목록 조회
 
     @GetMapping("members")
