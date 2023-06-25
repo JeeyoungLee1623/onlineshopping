@@ -43,5 +43,18 @@ public class Item {
         this.stockQuantity = stockQuantity;
     }
 
+    public void removeQuantity(int stockQuantity) throws Exception{
+        int new_Quantity = this.stockQuantity - stockQuantity;
+        if(new_Quantity < 0){
+            throw new Exception();
+        }
+        this.stockQuantity = new_Quantity;
+    }
+
+    public void addQuantity(int stockQuantity) {
+        int new_Quantity = this.stockQuantity + stockQuantity;
+        this.stockQuantity = new_Quantity;
+    }
+
 
 }

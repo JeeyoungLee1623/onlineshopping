@@ -1,6 +1,8 @@
 package com.example.onlineshopping.order.etc;
 
 
+import com.example.onlineshopping.item.domain.Item;
+import com.example.onlineshopping.member.domain.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,11 +10,9 @@ import lombok.Setter;
 @Setter
 public class OrderFormDto {
 
-    private String id;
-    private String members;
-    private String items;
-    private String status;
-
+//    private String id;
+    private Long memberId;
+    private Long itemId;
     private Long count;
 
 

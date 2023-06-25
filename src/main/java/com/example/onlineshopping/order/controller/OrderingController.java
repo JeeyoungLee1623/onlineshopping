@@ -2,13 +2,18 @@ package com.example.onlineshopping.order.controller;
 
 
 import com.example.onlineshopping.item.domain.Item;
+import com.example.onlineshopping.item.etc.ItemForm;
+import com.example.onlineshopping.item.repository.ItemRepository;
 import com.example.onlineshopping.item.service.ItemService;
 import com.example.onlineshopping.member.domain.Address;
 import com.example.onlineshopping.member.domain.Member;
 import com.example.onlineshopping.member.etc.MemberForm;
+import com.example.onlineshopping.member.repository.MemberRepository;
 import com.example.onlineshopping.member.service.MemberService;
+import com.example.onlineshopping.order.domain.OrderStatus;
 import com.example.onlineshopping.order.domain.Ordering;
 import com.example.onlineshopping.order.etc.OrderFormDto;
+import com.example.onlineshopping.order.etc.OrderSearch;
 import com.example.onlineshopping.order.service.OrderingService;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,50 +33,50 @@ public class OrderingController {
     @Autowired
     private OrderingService orderingService;
 
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
 
 
     @GetMapping("/order")
     public String createForm (Model model){
+        model.addAttribute("members", memberRepository.findAll());
+        model.addAttribute("items", itemRepository.findAll());
         return "order/orderForm";
     }
 
     @PostMapping("/order")
-    public String orderingCreate() throws Exception{
+    public String orderingCreate(OrderFormDto orderFormDto) throws Exception{;
+        Member member1 = memberRepository.findById(orderFormDto.getMemberId()).orElse(null);
         Ordering ordering = Ordering.builder()
-                .quantity()
-                .item()
-                .member()
+                .quantity(orderFormDto.getCount())
+                .item(itemRepository.findById(orderFormDto.getItemId()).orElse(null))
+                .member(member1)
                 .build();
         orderingService.create(ordering);
-        return "redirect:/orders";
+        return "redirect:/";
     }
 
 //    회원 목록 조회
 
     @GetMapping("orders")
-    public String orderFindAll(Model model) throws SQLException {
-        List<Ordering> orderings = orderingService.findAll();
+//    @ModelAttribute("orderSearch") 명시적으로 OrderSearchDto 와 mapping 을 할 수도 있다.
+    public String orderFindAll(OrderSearch orderSearch, Model model) throws SQLException {
+//        System.out.println(orderSearch.getMemberName());
+        List<Ordering> orderings = orderingService.findByFilter(orderSearch);
         model.addAttribute("orders", orderings);
         return "order/orderList";
     }
 
+    @PostMapping("/orders/{id}/cancel")
+    public String ordersCancel(@PathVariable("id")Long myId) throws Exception {
+        orderingService.cancel(myId);
+        return "redirect:/orders";
+    }
 
-
-//    @GetMapping("/order")
-//    public String createForm (@RequestParam(value = "id")Long myEmail,
-//                              @RequestParam(value = "id")Long myName, Model model) throws Exception{
-//            Member member1  = memberService.findByEmail(myEmail);
-//            Item item1 = itemService.findByName(myName);
-//
-//        model.addAttribute("form", new OrderFormDto());
-//        return "order/orderForm";
-//    }
-
-//    @PostMapping("/order")
-//    public String orderCreate(OrderFormDto orderFormDto) throws Exception{
-//        orderingService.create(orderFormDto);
-//        return "redirect:/";
-//    }
 
 
 
