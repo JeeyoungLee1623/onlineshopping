@@ -1,8 +1,6 @@
-package com.example.onlineshopping.order.etc;
+package com.example.onlineshopping.order_items.etc;
 
 
-import com.example.onlineshopping.item.domain.Item;
-import com.example.onlineshopping.member.domain.Member;
 import lombok.Getter;
 import lombok.Setter;
 

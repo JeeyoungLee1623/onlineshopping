@@ -1,28 +1,18 @@
 package com.example.onlineshopping.order.controller;
-
-
-import com.example.onlineshopping.item.domain.Item;
-import com.example.onlineshopping.item.etc.ItemForm;
 import com.example.onlineshopping.item.repository.ItemRepository;
-import com.example.onlineshopping.item.service.ItemService;
-import com.example.onlineshopping.member.domain.Address;
-import com.example.onlineshopping.member.domain.Member;
-import com.example.onlineshopping.member.etc.MemberForm;
 import com.example.onlineshopping.member.repository.MemberRepository;
-import com.example.onlineshopping.member.service.MemberService;
-import com.example.onlineshopping.order.domain.OrderStatus;
+
 import com.example.onlineshopping.order.domain.Ordering;
 import com.example.onlineshopping.order.etc.OrderFormDto;
 import com.example.onlineshopping.order.etc.OrderSearch;
 import com.example.onlineshopping.order.service.OrderingService;
-import org.hibernate.criterion.Order;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -50,13 +40,13 @@ public class OrderingController {
 
     @PostMapping("/order")
     public String orderingCreate(OrderFormDto orderFormDto) throws Exception{;
-        Member member1 = memberRepository.findById(orderFormDto.getMemberId()).orElse(null);
-        Ordering ordering = Ordering.builder()
-                .quantity(orderFormDto.getCount())
-                .item(itemRepository.findById(orderFormDto.getItemId()).orElse(null))
-                .member(member1)
-                .build();
-        orderingService.create(ordering);
+//        Member member1 = memberRepository.findById(orderFormDto.getMemberId()).orElse(null);
+//        Ordering ordering = Ordering.builder()
+//                .member(member1)
+//                .build();
+
+//        order_item까지 고려하여 로직이 복잡해지므로, service에서 로직처리.
+        orderingService.create(orderFormDto);
         return "redirect:/";
     }
 
